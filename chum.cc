@@ -213,17 +213,9 @@ void ChumPort::on_action_file_open() {
 	const int result = dialog.run();
 	if (result == Gtk::RESPONSE_OK) {
 		Call(SCI_CLEARALL);
-		std::string filename = dialog.get_filename();
-		FILE *fp = fopen(filename.c_str(), "rb");
-		if (fp) {
-			fseek(fp, 0, SEEK_END);
-			long characters = ftell(fp);
-			rewind(fp);
-			std::vector<char> contents(characters);
-			fread(contents.data(), 1, characters, fp);
-			fclose(fp);
-			Call(SCI_ADDTEXT, characters, reinterpret_cast<sptr_t>(contents.data()));
-		}
+		const std::string filename = dialog.get_filename();
+		const std::string contents = Glib::file_get_contents(filename);
+		Call(SCI_ADDTEXT, contents.length(), reinterpret_cast<sptr_t>(contents.data()));
 	}
 }
 
