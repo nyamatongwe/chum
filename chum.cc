@@ -13,7 +13,7 @@ class ScintillaWindow {
 public:
 	Gtk::Widget *editor;
 	ScintillaWindow();
-	virtual ~ScintillaWindow() = default;
+	~ScintillaWindow();
 	int Call(unsigned int msg, uptr_t wParam=0, sptr_t lParam=0);
 };
 
@@ -21,6 +21,10 @@ ScintillaWindow::ScintillaWindow() {
 	editor = Glib::wrap(scintilla_new());
 	sci = SCINTILLA(editor->gobj());
 	scintilla_set_id(sci, 0);
+}
+
+ScintillaWindow::~ScintillaWindow() {
+	delete editor;
 }
 
 int ScintillaWindow::Call(unsigned int msg, uptr_t wParam, sptr_t lParam) {
