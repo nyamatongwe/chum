@@ -322,6 +322,7 @@ void ChumPort::on_encoding_choices(int parameter) {
 			Call(SCI_SETCODEPAGE, 0);
 			break;
 		case 2:
+			// 932 is the most common Japanese Shift-JIS encoding.
 			Call(SCI_SETCODEPAGE, 932);
 			break;
 	}
